@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { MainView } from "./components/MainView";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -11,7 +12,7 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div>App</div>
+      <MainView />
     </QueryClientProvider>
   );
 }
