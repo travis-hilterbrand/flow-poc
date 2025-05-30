@@ -3,7 +3,7 @@ import { Http } from "../http/types";
 import { Project } from "../types";
 
 export type GetProjectsResponse = {
-  projects: Project[];
+  data: Project[];
 };
 
 export class ProjectsService {

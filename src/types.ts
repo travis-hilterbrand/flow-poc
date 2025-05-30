@@ -22,6 +22,6 @@ export type Flow = {
   id: string;
 };
 export type Project = {
-  flows: Flow[];
   id: string;
+  flow: string;
 };
