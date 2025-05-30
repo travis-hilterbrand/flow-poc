@@ -30,6 +30,12 @@ export class HttpImp implements Http {
   public get = <T>(params: GetParameters): Promise<T> => {
     return this.fetchApi<T>(params, "GET");
   };
+  public post = <T>(params: GetParameters): Promise<T> => {
+    return this.fetchApi<T>(params, "POST");
+  };
+  public put = <T>(params: GetParameters): Promise<T> => {
+    return this.fetchApi<T>(params, "PUT");
+  };
 
   public fetchApi = async <T>(params: FetchAPI, method: Method): Promise<T> => {
     const { url, query, body, signal } = params;

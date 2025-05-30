@@ -1,9 +1,11 @@
+import { StandardAPIErrorWithDetail } from "./http/errors";
+
 export type NodeProperty = {
   name: string;
   required: boolean;
 };
 
-export type NodeTags = "input" | "output" | "processoor";
+export type NodeTags = "input" | "output" | "processor";
 
 export type SchemaNode = {
   description: string;
@@ -24,4 +26,19 @@ export type Flow = {
 export type Project = {
   id: string;
   flow: string;
+};
+
+export type FlowResultErrorDetail = {
+  results: { success: boolean; error: string }[];
+};
+export type FlowResultError = StandardAPIErrorWithDetail<FlowResultErrorDetail>;
+
+export type FlowResult = {
+  node: FlowNode;
+  nodeSchema: SchemaNode;
+  result: string;
+  runtime: number;
+};
+export type FlowResults = {
+  results: FlowResult[];
 };

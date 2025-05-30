@@ -4,7 +4,7 @@ import { GetSchemaResponse } from "../api/schema";
 import { MockNodeSchema } from "./schema";
 import { GetProjectsResponse } from "../api/projects";
 import { MockProjects } from "./projects";
-import { MockFlow } from "./flows";
+import { MockFlow, MockFlowResults } from "./flows";
 import { sleep } from "../utils";
 
 const handlers = [
@@ -23,6 +23,16 @@ const handlers = [
     const { id } = req.params;
     if (id === "default") {
       return HttpResponse.json(MockFlow);
+    }
+    return new HttpResponse(null, {
+      status: 404,
+    });
+  }),
+  http.put<{ id: string }>("/v1/flows/:id/execute", async (req) => {
+    const { id } = req.params;
+    if (id === "default") {
+      await sleep(800);
+      return HttpResponse.json(MockFlowResults);
     }
     return new HttpResponse(null, {
       status: 404,
