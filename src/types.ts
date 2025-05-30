@@ -42,3 +42,8 @@ export type FlowResult = {
 export type FlowResults = {
   results: FlowResult[];
 };
+
+export type FlowNodeRun = {
+  node: FlowNode;
+  nodeSchema: SchemaNode;
+};
