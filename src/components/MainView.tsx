@@ -3,6 +3,7 @@ import { useGetProjects } from "../hooks/useGetProjects";
 import { useGetSchema } from "../hooks/useGetSchema";
 import { useGetFlow } from "../hooks/useGetFlow";
 import { flowsService } from "../api/flows";
+import HomeIcon from "@mui/icons-material/Home";
 
 export const MainView = () => {
   const [flowId, setFlowId] = useState<string | undefined>();
@@ -26,5 +27,11 @@ export const MainView = () => {
     }
   }, [flowId]);
 
-  return <div>{JSON.stringify({ flow, schema })}</div>;
+  return (
+    <div>
+      {JSON.stringify({ flow, schema })}
+      <hr />
+      <HomeIcon />
+    </div>
+  );
 };

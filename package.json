@@ -10,16 +10,24 @@
     "preview": "vite preview",
     "start": "vite",
     "test": "vitest",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@fontsource/roboto": "^5.2.5",
     "@mswjs/data": "^0.16.1",
+    "@mui/icons-material": "^6.4.7",
+    "@mui/material": "^6.4.12",
     "@tanstack/react-query": "^5.50.1",
     "axios": "^1.7.2",
     "msw": "^2.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "styled-components": "^6.1.11"
+    "styled-components": "^6.1.11",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.51.12",
