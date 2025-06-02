@@ -16,17 +16,3 @@ body {
   margin: 0;
   padding: 16px;
 }
-
-button {
-  margin: 0;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  background: blue;
-  color: white;
-  cursor: pointer;
-
-  hover {
-    opacity: 0.8;
-  }
-}
