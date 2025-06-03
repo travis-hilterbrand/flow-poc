@@ -5,14 +5,16 @@ export type NodeProperty = {
   required: boolean;
 };
 
-export type NodeTags = "input" | "output" | "processor";
+export type FlowNodeTypes = "input" | "output" | "processor";
+
+export type FlowThemes = "brown" | "grey" | "yellow";
 
 export type SchemaNode = {
   description: string;
   id: string;
   name: string;
   properties: NodeProperty[];
-  tags: NodeTags[];
+  tags: string[];
 };
 
 export type FlowNode = {
