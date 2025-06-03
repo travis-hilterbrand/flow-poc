@@ -1,9 +1,9 @@
 import { HttpImp } from "../http/http";
 import { Http } from "../http/types";
-import { SchemaNode } from "../types";
+import { FlowNodeSchema } from "../types";
 
 export type GetSchemaResponse = {
-  nodes: SchemaNode[];
+  nodes: FlowNodeSchema[];
 };
 
 export class SchemaService {

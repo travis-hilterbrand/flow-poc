@@ -2,14 +2,14 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { IconChip as Component } from "./IconChip";
 import {
   flowThemeToBackground,
-  flowTypeToIcon,
-  flowTypeToTheme,
-  getTextColor,
+  flowCategoryToIcon,
+  flowCategoryToTheme,
 } from "../FlowThemes";
-import { FlowNodeTypes } from "../../types";
+import { FlowNodeCategories } from "../../types";
+import { getTextColor } from "../../theme/Theme";
 
-const EXAMPLE_TYPE: FlowNodeTypes = "output";
-const EXAMPLE_THEME = flowTypeToTheme(EXAMPLE_TYPE);
+const EXAMPLE_CATEGORY: FlowNodeCategories = "output";
+const EXAMPLE_THEME = flowCategoryToTheme(EXAMPLE_CATEGORY);
 
 const meta = {
   title: "IconChip",
@@ -17,7 +17,7 @@ const meta = {
   args: {
     background: flowThemeToBackground(EXAMPLE_THEME, "dark"),
     color: getTextColor(),
-    icon: flowTypeToIcon(EXAMPLE_TYPE),
+    icon: flowCategoryToIcon(EXAMPLE_CATEGORY),
     size: 44,
   },
 } satisfies Meta<typeof Component>;

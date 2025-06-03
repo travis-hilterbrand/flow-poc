@@ -1,7 +1,7 @@
 import { HTMLProps, ReactNode } from "react";
 import { css } from "@emotion/css";
 import "./style.css";
-import { getTextColor } from "../FlowThemes";
+import { getTextColor } from "../../theme/Theme";
 
 export type ButtonVariants = "transparent";
 

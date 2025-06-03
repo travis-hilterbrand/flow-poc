@@ -9,7 +9,7 @@ export interface IconChipProps {
 }
 
 export const IconChip = (props: IconChipProps) => {
-  const { background, color, icon, size } = props;
+  const { background, color, icon, size = 32 } = props;
   return (
     <div
       style={{ background, color, height: size, width: size }}

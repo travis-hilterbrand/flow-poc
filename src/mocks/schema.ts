@@ -1,6 +1,7 @@
-import { SchemaNode } from "../types";
+import { FlowNodeSchema } from "../types";
 
-export const MockNodeSchemaInput: SchemaNode = {
+export const MockNodeSchemaInput: FlowNodeSchema = {
+  category: "input",
   description: "Entry point for basic input values.",
   id: "Input",
   name: "Input",
@@ -8,4 +9,4 @@ export const MockNodeSchemaInput: SchemaNode = {
   tags: ["input"],
 };
 
-export const MockNodeSchema: SchemaNode[] = [MockNodeSchemaInput];
+export const MockNodeSchema: FlowNodeSchema[] = [MockNodeSchemaInput];
