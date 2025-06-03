@@ -2,12 +2,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem;
   border-radius: 14px;
   border: none;
 }
 .icon-chip svg {
-  height: 80%;
-  width: 80%;
+  height: 60%;
+  width: 60%;
   fill: currentColor;
 }

@@ -1,0 +1,16 @@
+.flow-node-item {
+  display: inline-flex;
+  border-radius: 16px;
+  padding: 16px;
+  width: 500px;
+}
+.flow-node-item .top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.flow-node-item .top-right {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}

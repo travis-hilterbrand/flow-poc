@@ -6,6 +6,7 @@ const meta = {
   title: "FlowNodeItem",
   component: Component,
   args: {
+    collapsed: false,
     schema: MockNodeSchemaInput,
   },
 } satisfies Meta<typeof Component>;
@@ -15,4 +16,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {},
+};
+
+export const Collapsed: Story = {
+  args: {
+    collapsed: true,
+  },
 };
