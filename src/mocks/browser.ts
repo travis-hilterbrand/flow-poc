@@ -11,7 +11,7 @@ const handlers = [
   // schema
   http.get<object, object, GetSchemaResponse>("/v1/schema", async () => {
     await sleep(300);
-    return HttpResponse.json({ nodes: MockNodeSchema });
+    return HttpResponse.json({ nodesSchema: MockNodeSchema });
   }),
   // projects
   http.get<object, object, GetProjectsResponse>("/v1/projects", async () => {

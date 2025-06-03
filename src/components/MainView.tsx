@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useGetProjects } from "../hooks/useGetProjects";
 import { useGetSchema } from "../hooks/useGetSchema";
 import { useGetFlow } from "../hooks/useGetFlow";
-import { flowsService } from "../api/flows";
-import HomeIcon from "@mui/icons-material/Home";
+import { FlowNodeCanvas } from "./FlowNodeCanvas";
 
 export const MainView = () => {
   const [flowId, setFlowId] = useState<string | undefined>();
@@ -18,20 +17,14 @@ export const MainView = () => {
     }
   }, [projects]);
 
-  const executeFlow = async (flowId: string) => {
-    await flowsService.executeFlow(flowId);
-  };
-  useEffect(() => {
-    if (flowId) {
-      executeFlow(flowId);
-    }
-  }, [flowId]);
-
-  return (
-    <div>
-      {JSON.stringify({ flow, schema })}
-      <hr />
-      <HomeIcon />
-    </div>
-  );
+  if (flow && schema) {
+    return (
+      <FlowNodeCanvas
+        key={flow.id}
+        flow={flow}
+        nodesSchema={schema.nodesSchema}
+      ></FlowNodeCanvas>
+    );
+  }
+  return null;
 };

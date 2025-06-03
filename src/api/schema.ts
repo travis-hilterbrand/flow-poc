@@ -3,7 +3,7 @@ import { Http } from "../http/types";
 import { FlowNodeSchema } from "../types";
 
 export type GetSchemaResponse = {
-  nodes: FlowNodeSchema[];
+  nodesSchema: FlowNodeSchema[];
 };
 
 export class SchemaService {
