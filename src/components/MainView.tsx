@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useGetProjects } from "../hooks/useGetProjects";
 import { useGetSchema } from "../hooks/useGetSchema";
 import { useGetFlow } from "../hooks/useGetFlow";
-import { FlowNodeCanvas } from "./FlowNodeCanvas";
+import { FlowNodeCanvas } from "./FlowNodeCanvas/FlowNodeCanvas";
 
 export const MainView = () => {
   const [flowId, setFlowId] = useState<string | undefined>();
