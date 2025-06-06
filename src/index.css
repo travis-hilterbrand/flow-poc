@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Roboto, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -12,21 +12,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
+html,
+body,
+#root {
+  height: 100%;
   margin: 0;
-  padding: 16px;
+  padding: 0;
 }
 
-button {
-  margin: 0;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  background: blue;
-  color: white;
-  cursor: pointer;
-
-  hover {
-    opacity: 0.8;
-  }
+.react-flow__attribution {
+  /* hide for demo - however, customers must pay */
+  display: none;
 }

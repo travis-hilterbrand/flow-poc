@@ -1,0 +1,12 @@
+.icon-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  border: none;
+}
+.icon-chip svg {
+  height: 60%;
+  width: 60%;
+  fill: currentColor;
+}
