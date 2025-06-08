@@ -1,5 +1,10 @@
 import { StandardAPIErrorWithDetail } from "./http/errors";
 
+export type FlowEdgeData = {
+  id: string;
+  source: string;
+  target: string;
+};
 export type FlowNodeData = {
   id: string;
   collapsed: boolean;

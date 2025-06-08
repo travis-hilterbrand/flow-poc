@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { getTextColor } from "../../theme/Theme";
 import { FlowNodeSchema } from "../../types";
 import { Button } from "../Button/Button";
@@ -12,6 +13,8 @@ import CollapseIcon from "@mui/icons-material/CloseFullscreen";
 import ExpandIcon from "@mui/icons-material/OpenInFull";
 
 export interface FlowNodeItemProps {
+  children?: ReactNode;
+  className?: string;
   collapsed: boolean;
   selected: boolean;
   schema: FlowNodeSchema;
@@ -19,12 +22,19 @@ export interface FlowNodeItemProps {
 }
 
 export const FlowNodeItem = (props: FlowNodeItemProps) => {
-  const { collapsed, selected, schema, onChangeCollapse = () => {} } = props;
+  const {
+    children,
+    className,
+    collapsed,
+    selected,
+    schema,
+    onChangeCollapse = () => {},
+  } = props;
   const theme = flowCategoryToTheme(schema.category);
 
   return (
     <div
-      className="flow-node-item"
+      className={["flow-node-item", className].join(" ")}
       style={{
         border: `2px solid ${
           selected ? flowThemeToBackground(theme, "light") : "#eee"
@@ -54,6 +64,7 @@ export const FlowNodeItem = (props: FlowNodeItemProps) => {
         </div>
       </div>
       {!collapsed && <div className="flow-node-item-content"></div>}
+      {children}
     </div>
   );
 };

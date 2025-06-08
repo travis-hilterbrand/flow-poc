@@ -1,43 +1,51 @@
-import { useNodesState, useEdgesState, OnConnect, addEdge, Edge, Node } from "@xyflow/react";
+import {
+  useNodesState,
+  useEdgesState,
+  OnConnect,
+  addEdge,
+  Edge,
+} from "@xyflow/react";
 import { useCallback, useEffect } from "react";
+import { FlowNodeInternal } from "../components/FlowNodeCanvas/types";
+import { useFlowNodes } from "./useFlowNodes";
 
 export const useFlowNodeCanvas = () => {
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([
-  { id: "1->2", source: "1", target: "2", animated: true, type: "smoothstep" },
-  ]);
-  const [nodes, , onNodesChange] = useNodesState<Node>([
-    {
-      id: "1",
-      type: "FlowNodeBase",
-      position: { x: 0, y: 0 },
-      data: { label: "Node 1" },
-    },
-    {
-      id: "2",
-      type: "FlowNodeBase",
-      position: { x: 0, y: 200 },
-      data: { label: "Node 2" },
-    },
-  ]);
+  const { loaded, edgesList, nodesList, onEdgesInternalChange } =
+    useFlowNodes();
+
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<FlowNodeInternal>([]);
   const onConnect: OnConnect = useCallback(
     (connection) => {
       setEdges((edges) => {
         const newEdges = addEdge(connection, edges).map((edge) => {
-          return { ...edge, animated: true };
+          return { ...edge, animated: true, type: "smoothstep" };
         });
         console.info(`onConnect()`, { connection, newEdges });
+        onEdgesInternalChange(newEdges);
         return newEdges;
       });
     },
-    [setEdges]
+    [setEdges, onEdgesInternalChange]
   );
 
   useEffect(() => {
-    console.info(`edges changed`, edges);
-  }, [edges]);
+    if (loaded) {
+      setEdges(edgesList);
+    }
+  }, [loaded, edgesList, setEdges]);
   useEffect(() => {
-    console.info(`nodes changed`, nodes);
-  }, [nodes]);
+    if (loaded) {
+      setNodes(nodesList);
+    }
+  }, [loaded, nodesList, setNodes]);
+
+  useEffect(() => {
+    if (loaded) console.info(`edges changed`, edges);
+  }, [loaded, edges]);
+  useEffect(() => {
+    if (loaded) console.info(`nodes changed`, nodes);
+  }, [loaded, nodes]);
 
   return { edges, nodes, onConnect, onEdgesChange, onNodesChange };
 };

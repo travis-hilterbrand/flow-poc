@@ -1,15 +1,23 @@
 import { Position, type NodeProps } from "@xyflow/react";
 import { FlowNodeBaseType } from "../types";
 import { FlowNodeBaseHandle } from "./FlowNodeBaseHandle";
+import { FlowNodeItem } from "shared/FlowNodeItem/FlowNodeItem";
 
 export const FlowNodeBase = (props: NodeProps<FlowNodeBaseType>) => {
-  const { data } = props;
+  const { data, selected } = props;
 
   return (
-    <div className="react-flow__node-default">
-      <div>{JSON.stringify(data.node)}</div>
+    <FlowNodeItem
+      className={"react-flow__node-default"}
+      collapsed={data.node.data.collapsed}
+      selected={selected}
+      schema={data.node.schema}
+      onChangeCollapse={(newValue: boolean) => {
+        // TODO
+      }}
+    >
       <FlowNodeBaseHandle type="target" position={Position.Top} />
       <FlowNodeBaseHandle type="source" position={Position.Bottom} />
-    </div>
+    </FlowNodeItem>
   );
 };

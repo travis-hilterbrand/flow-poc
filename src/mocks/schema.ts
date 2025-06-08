@@ -8,5 +8,16 @@ export const MockNodeSchemaInput: FlowNodeSchema = {
   properties: [{ name: "value", required: true }],
   tags: ["input"],
 };
+export const MockNodeSchemaOutput: FlowNodeSchema = {
+  category: "output",
+  description: "Test node for basic output",
+  id: "Output",
+  name: "Output",
+  properties: [],
+  tags: ["output"],
+};
 
-export const MockNodeSchema: FlowNodeSchema[] = [MockNodeSchemaInput];
+export const MockNodeSchema: Record<string, FlowNodeSchema> = {
+  Input: MockNodeSchemaInput,
+  Output: MockNodeSchemaOutput,
+};
