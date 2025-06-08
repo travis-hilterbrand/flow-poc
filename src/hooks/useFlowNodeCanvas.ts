@@ -8,10 +8,11 @@ import {
 import { useCallback, useEffect } from "react";
 import { FlowNodeInternal } from "../components/FlowNodeCanvas/types";
 import { useFlowNodes } from "./useFlowNodes";
+import { useGetFlowNodes } from "./useGetFlowNodes";
 
 export const useFlowNodeCanvas = () => {
-  const { loaded, edgesList, nodesList, onEdgesInternalChange } =
-    useFlowNodes();
+  const { loaded } = useGetFlowNodes();
+  const { edgesList, nodesList, onEdgesInternalChange } = useFlowNodes();
 
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [nodes, setNodes, onNodesChange] = useNodesState<FlowNodeInternal>([]);
