@@ -12,7 +12,7 @@ import { useGetFlowNodes } from "./useGetFlowNodes";
 
 export const useFlowNodeCanvas = () => {
   const { loaded } = useGetFlowNodes();
-  const { edgesList, nodesList, onEdgesInternalChange } = useFlowNodes();
+  const { edgesList, nodesList, onChangeEdgesInternal } = useFlowNodes();
 
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [nodes, setNodes, onNodesChange] = useNodesState<FlowNodeInternal>([]);
@@ -23,11 +23,11 @@ export const useFlowNodeCanvas = () => {
           return { ...edge, animated: true, type: "smoothstep" };
         });
         console.info(`onConnect()`, { connection, newEdges });
-        onEdgesInternalChange(newEdges);
+        onChangeEdgesInternal(newEdges);
         return newEdges;
       });
     },
-    [setEdges, onEdgesInternalChange]
+    [setEdges, onChangeEdgesInternal]
   );
 
   useEffect(() => {

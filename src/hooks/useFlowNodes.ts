@@ -2,13 +2,31 @@ import { Edge } from "@xyflow/react";
 import { useCallback } from "react";
 import { useFlowStore } from "store/useFlowStore";
 
-export const useFlowNodes = () => {
-  const { edgesList, nodesList } = useFlowStore();
+const LOG_ROOT = "[useFlowNodes]";
 
-  const onEdgesInternalChange = useCallback((_newEdges: Edge[]) => {
+export const useFlowNodes = () => {
+  const { edgesList, nodesList, setNodesList } = useFlowStore();
+
+  const onChangeCollapse = useCallback(
+    (params: { id: string; newValue: boolean }) => {
+      console.info(
+        `${LOG_ROOT} onChangeCollapse(${params.id}, ${params.newValue})`
+      );
+      const newNodeList = [...nodesList];
+      const node = newNodeList.find(
+        (item) => item.data.node.data.id === params.id
+      );
+      if (node) {
+        node.data.node.data.collapsed = params.newValue;
+        setNodesList(newNodeList);
+      }
+    },
+    [nodesList, setNodesList]
+  );
+  const onChangeEdgesInternal = useCallback((_newEdges: Edge[]) => {
     // triggered when users connect/disconnect nodes
     // TODO - persist
   }, []);
 
-  return { edgesList, nodesList, onEdgesInternalChange };
+  return { edgesList, nodesList, onChangeCollapse, onChangeEdgesInternal };
 };
