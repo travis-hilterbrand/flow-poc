@@ -2,8 +2,9 @@ import { HTMLProps, ReactNode } from "react";
 import { css } from "@emotion/css";
 import "./style.css";
 import { getTextColor } from "../../theme/Theme";
+import { pink } from "@mui/material/colors";
 
-export type ButtonVariants = "transparent";
+export type ButtonVariants = "round" | "transparent";
 
 type BaseProps = Pick<
   HTMLProps<HTMLButtonElement>,
@@ -25,6 +26,11 @@ export const Button = (props: ButtonProps) => {
         "button",
         `variant-${variant}`,
         css`
+          &.variant-round {
+            border-radius: 50%;
+            background: ${pink[400]};
+            color: white;
+          }
           &.variant-transparent {
             background: transparent;
             color: ${getTextColor()};

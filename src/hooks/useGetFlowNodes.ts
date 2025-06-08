@@ -22,7 +22,7 @@ const edgeListToInternal = (data: FlowEdgeData[]): FlowEdgeInternal[] => {
   return data.map((data) => externalToInternalEdge(data));
 };
 
-const externalToInternalNode = (value: FlowNode): FlowNodeInternal => {
+export const externalToInternalNode = (value: FlowNode): FlowNodeInternal => {
   const { data, schema } = value;
   return {
     id: data.id,
@@ -67,7 +67,9 @@ export const useGetFlowNodes = () => {
 
   const edgesData = MockFlow.edges;
   useEffect(() => {
-    setEdgesList(edgeListToInternal(edgesData));
+    const result = edgeListToInternal(edgesData);
+    setEdgesList(result);
+    console.info(`${LOG_ROOT} edges initialized`, result);
   }, [edgesData, setEdgesList]);
 
   const { data: schema } = useGetSchema();
@@ -77,6 +79,7 @@ export const useGetFlowNodes = () => {
       const result: FlowNodeInternal[] = flowListToInternal(nodesData, schema);
       setNodesList(result);
       setLoaded(true);
+      console.info(`${LOG_ROOT} nodes initialized`, result);
     }
   }, [loaded, nodesData, schema, setNodesList]);
 

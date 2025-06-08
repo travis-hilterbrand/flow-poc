@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 import { Button as Component } from "./Button";
+import AddIcon from "@mui/icons-material/Add";
 import HomeIcon from "@mui/icons-material/Home";
 
 const meta = {
@@ -24,5 +25,12 @@ export const Default: Story = {
 export const WithIcon: Story = {
   args: {
     icon: () => <HomeIcon />,
+  },
+};
+
+export const Round: Story = {
+  args: {
+    icon: () => <AddIcon />,
+    variant: "round",
   },
 };

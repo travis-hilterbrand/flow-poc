@@ -15,14 +15,14 @@ export const MockFlow: {
     {
       id: "1",
       collapsed: false,
-      position: { x: 0, y: 0 },
+      position: { x: 100, y: 0 },
       properties: {},
       type: "Input",
     },
     {
       id: "2",
       collapsed: false,
-      position: { x: 135, y: 500 },
+      position: { x: 235, y: 500 },
       properties: {},
       type: "Output",
     },

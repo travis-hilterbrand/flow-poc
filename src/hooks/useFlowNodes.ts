@@ -1,11 +1,33 @@
 import { Edge } from "@xyflow/react";
+import { FlowNodeInternal } from "components/FlowNodeCanvas/types";
 import { useCallback } from "react";
+import { v4 } from "uuid";
 import { useFlowStore } from "store/useFlowStore";
+import { FlowNodeSchema } from "types";
+import { externalToInternalNode } from "./useGetFlowNodes";
 
 const LOG_ROOT = "[useFlowNodes]";
 
 export const useFlowNodes = () => {
   const { edgesList, nodesList, setNodesList } = useFlowStore();
+
+  const onAddNode = (schema: FlowNodeSchema) => {
+    const newNode: FlowNodeInternal = externalToInternalNode({
+      data: {
+        id: v4(),
+        collapsed: false,
+        position: { x: 0, y: 0 },
+        properties: [],
+        type: schema.id,
+      },
+      schema,
+    });
+    const newNodeList = [...nodesList];
+    newNodeList.push(newNode);
+    setNodesList(newNodeList);
+
+    console.info(`${LOG_ROOT} onAddNode(${newNode.id}, ${schema.id})`);
+  };
 
   const onChangeCollapse = useCallback(
     (params: { id: string; newValue: boolean }) => {
@@ -28,5 +50,11 @@ export const useFlowNodes = () => {
     // TODO - persist
   }, []);
 
-  return { edgesList, nodesList, onChangeCollapse, onChangeEdgesInternal };
+  return {
+    edgesList,
+    nodesList,
+    onAddNode,
+    onChangeCollapse,
+    onChangeEdgesInternal,
+  };
 };
