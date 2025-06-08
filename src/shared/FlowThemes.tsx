@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { FlowNodeCategories, FlowThemes } from "../types";
-import { brown } from "@mui/material/colors";
+import { blue } from "@mui/material/colors";
 import { grey } from "@mui/material/colors";
 import { yellow } from "@mui/material/colors";
 import AnimationIcon from "@mui/icons-material/Animation";
@@ -16,7 +16,7 @@ export const flowCategoryToTheme = (
     case "output":
       return "yellow";
     case "processor":
-      return "brown";
+      return "blue";
     default:
       throw new Error(`Unknown flow node type: ${category}`);
   }
@@ -40,8 +40,8 @@ export const flowThemeToBackground = (
 ): string => {
   const index = type === "dark" ? 500 : 200;
   switch (theme) {
-    case "brown":
-      return brown[index];
+    case "blue":
+      return blue[index];
     case "grey":
       return grey[index];
     case "yellow":

@@ -7,7 +7,7 @@ export const FlowNodeBase = (props: NodeProps<FlowNodeBaseType>) => {
 
   return (
     <div className="react-flow__node-default">
-      <div>{data.label}</div>
+      <div>{JSON.stringify(data.node)}</div>
       <FlowNodeBaseHandle type="target" position={Position.Top} />
       <FlowNodeBaseHandle type="source" position={Position.Bottom} />
     </div>

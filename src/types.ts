@@ -18,7 +18,7 @@ export type FlowNodeProperty = {
 
 export type FlowNodeCategories = "input" | "output" | "processor";
 
-export type FlowThemes = "brown" | "grey" | "yellow";
+export type FlowThemes = "blue" | "grey" | "yellow";
 
 export type FlowNodeSchema = {
   category: FlowNodeCategories;

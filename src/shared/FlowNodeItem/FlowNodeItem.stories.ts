@@ -38,3 +38,40 @@ export const Selected: Story = {
     selected: true,
   },
 };
+
+export const CategoryInput: Story = {
+  args: {
+    schema: {
+      category: "input",
+      description: "Input node",
+      id: "Input",
+      name: "Input",
+      properties: [],
+      tags: [],
+    },
+  },
+};
+export const CategoryOutput: Story = {
+  args: {
+    schema: {
+      category: "output",
+      description: "Output node",
+      id: "Output",
+      name: "Output",
+      properties: [],
+      tags: [],
+    },
+  },
+};
+export const CategoryProcessor: Story = {
+  args: {
+    schema: {
+      category: "processor",
+      description: "Processor node",
+      id: "Processor",
+      name: "Processor",
+      properties: [],
+      tags: [],
+    },
+  },
+};
