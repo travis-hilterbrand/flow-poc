@@ -1,15 +1,18 @@
 import { Edge } from "@xyflow/react";
+import { useShallow } from "zustand/react/shallow";
 import { FlowNodeInternal } from "components/FlowNodeCanvas/types";
 import { useCallback } from "react";
 import { v4 } from "uuid";
-import { useFlowStore } from "store/useFlowStore";
+import { flowStoreSelector, useFlowStore } from "store/useFlowStore";
 import { FlowNodeSchema } from "types";
 import { externalToInternalNode } from "./useGetFlowNodes";
 
 const LOG_ROOT = "[useFlowNodes]";
 
 export const useFlowNodes = () => {
-  const { edgesList, nodesList, setEdgesList, setNodesList } = useFlowStore();
+  const { edgesList, nodesList, setEdgesList, setNodesList } = useFlowStore(
+    useShallow(flowStoreSelector)
+  );
 
   const onAddNode = (schema: FlowNodeSchema) => {
     const newNode: FlowNodeInternal = externalToInternalNode({
@@ -59,6 +62,29 @@ export const useFlowNodes = () => {
     // triggered when users connect/disconnect nodes
     // TODO - persist
   }, []);
+  const onChangeNode = useCallback(
+    (changedNodesList: FlowNodeInternal[]) => {
+      if (changedNodesList.length === nodesList.length) {
+        const newNodesList = [...nodesList];
+        let changed = false;
+        for (let i = 0; i < changedNodesList.length; i++) {
+          if (
+            changedNodesList[i] &&
+            nodesList[i] &&
+            changedNodesList[i].position !== nodesList[i].position
+          ) {
+            changed = true;
+            newNodesList[i].position = nodesList[i].position;
+          }
+        }
+        if (changed) {
+          // TODO - use zustand setup from MindMap
+          //setNodesList(newNodesList);
+        }
+      }
+    },
+    [nodesList]
+  );
 
   return {
     edgesList,
@@ -67,5 +93,6 @@ export const useFlowNodes = () => {
     onDeleteNode,
     onChangeCollapse,
     onChangeEdgesInternal,
+    onChangeNode,
   };
 };

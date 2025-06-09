@@ -20,3 +20,10 @@ export const useFlowStore = create<FlowStore>()((set) => ({
   setNodesList: (value: FlowNodeInternal[]) =>
     set(() => ({ nodesList: value })),
 }));
+
+export const flowStoreSelector = (state: FlowStore) => ({
+  edgesList: state.edgesList,
+  nodesList: state.nodesList,
+  setEdgesList: state.setEdgesList,
+  setNodesList: state.setNodesList,
+});

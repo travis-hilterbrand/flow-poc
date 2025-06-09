@@ -14,7 +14,8 @@ const LOG_ROOT = "[useFlowNodeCanvas]";
 
 export const useFlowNodeCanvas = () => {
   const { loaded } = useGetFlowNodes();
-  const { edgesList, nodesList, onChangeEdgesInternal } = useFlowNodes();
+  const { edgesList, nodesList, onChangeEdgesInternal, onChangeNode } =
+    useFlowNodes();
 
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [nodes, setNodes, onNodesChange] = useNodesState<FlowNodeInternal>([]);
@@ -44,11 +45,16 @@ export const useFlowNodeCanvas = () => {
   }, [loaded, nodesList, setNodes]);
 
   useEffect(() => {
-    if (loaded) console.info(`${LOG_ROOT} edges changed`, edges);
+    if (loaded) {
+      console.info(`${LOG_ROOT} edges changed`, edges);
+    }
   }, [loaded, edges]);
   useEffect(() => {
-    if (loaded) console.info(`${LOG_ROOT} nodes changed`, nodes);
-  }, [loaded, nodes]);
+    if (loaded) {
+      console.info(`${LOG_ROOT} nodes changed`, nodes);
+      onChangeNode(nodes);
+    }
+  }, [loaded, nodes, onChangeNode]);
 
   return { edges, nodes, onConnect, onEdgesChange, onNodesChange };
 };
