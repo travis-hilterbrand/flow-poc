@@ -1,3 +1,4 @@
+import { css } from "@emotion/css";
 import { useEffect, useRef, useState } from "react";
 import { Search } from "shared/Search/Search";
 import { useFlowNodes } from "hooks/useFlowNodes";
@@ -23,26 +24,35 @@ export const Contents = ({ visible, onClose }: ContentsProps) => {
 
   return (
     <SidePanel side="left" visible={visible} onClose={() => onClose()}>
-      <Search
-        ref={searchRef}
-        defaultValue=""
-        style={{ flexShrink: 0 }}
-        onChange={(newValue) => setFilterTerm(newValue)}
-      />
-      <div style={{ flex: 1, overflow: "hidden auto" }}>
-        {filteredSchema.map((item) => {
-          return (
-            <NodeSchemaCard
-              key={item.id}
-              style={{ marginBottom: 8 }}
-              value={item}
-              onClick={(id) => {
-                onAddNode(id);
-                onClose();
-              }}
-            />
-          );
-        })}
+      <div
+        className={css`
+          height: 100%;
+          width: 100%;
+          overflow: hidden;
+          padding: 16px;
+        `}
+      >
+        <Search
+          ref={searchRef}
+          defaultValue=""
+          style={{ flexShrink: 0, width: "100%", marginBottom: 16 }}
+          onChange={(newValue) => setFilterTerm(newValue)}
+        />
+        <div style={{ flex: 1, overflow: "hidden auto" }}>
+          {filteredSchema.map((item) => {
+            return (
+              <NodeSchemaCard
+                key={item.id}
+                style={{ marginBottom: 8 }}
+                value={item}
+                onClick={(id) => {
+                  onAddNode(id);
+                  onClose();
+                }}
+              />
+            );
+          })}
+        </div>
       </div>
     </SidePanel>
   );

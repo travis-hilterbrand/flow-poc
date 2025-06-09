@@ -51,7 +51,6 @@ export const SidePanel = (props: SidePanelProps) => {
           border: 2px solid grey;
           border-radius: 8px;
           background: white;
-          padding: 16px;
           display: flex;
           flex-direction: column;
           gap: 8px;

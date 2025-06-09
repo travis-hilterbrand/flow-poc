@@ -4,7 +4,7 @@ import "./style.css";
 import { getTextColor } from "../../theme/Theme";
 import { grey, pink } from "@mui/material/colors";
 
-export type ButtonVariants = "border" | "round" | "transparent";
+export type ButtonVariants = "action" | "border" | "round" | "transparent";
 
 type BaseProps = Pick<
   HTMLProps<HTMLButtonElement>,
@@ -27,6 +27,11 @@ export const Button = (props: ButtonProps) => {
         "button",
         `variant-${variant}`,
         css`
+          &.variant-action {
+            border-color: ${pink[500]};
+            background: ${pink[400]};
+            color: white;
+          }
           &.variant-border {
             border-color: ${grey[500]};
             background: white;
