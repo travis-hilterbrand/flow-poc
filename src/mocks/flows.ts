@@ -10,6 +10,11 @@ export const MockFlow: {
       source: "1",
       target: "2",
     },
+    {
+      id: "2=>3",
+      source: "2",
+      target: "3",
+    },
   ],
   nodes: [
     {
@@ -23,6 +28,13 @@ export const MockFlow: {
       id: "2",
       collapsed: false,
       position: { x: 235, y: 500 },
+      properties: {},
+      type: "CombineText",
+    },
+    {
+      id: "3",
+      collapsed: false,
+      position: { x: 235, y: 1000 },
       properties: {},
       type: "Output",
     },

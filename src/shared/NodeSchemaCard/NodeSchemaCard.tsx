@@ -26,7 +26,8 @@ export const NodeSchemaCard = (props: NodeSchemaCardProps) => {
       className={css`
         cursor: pointer;
         display: flex;
-        gap: 8px;
+        flex-direction: column;
+        gap: 2px;
         background: white;
         border-radius: 4px;
         border: 1px solid grey;
@@ -35,23 +36,36 @@ export const NodeSchemaCard = (props: NodeSchemaCardProps) => {
       style={style}
       onClick={() => onClick(value)}
     >
-      <IconChip
-        background={flowThemeToBackground(theme, "dark")}
-        color={getTextColor()}
-        icon={flowCategoryToIcon(value.category)}
-        size={44}
-      />
       <div
         className={css`
           display: flex;
-          flex-direction: column;
-          overflow: hidden;
-          gap: 2px;
-          color: ${getTextColor()};
+          align-items: center;
+          gap: 8px;
         `}
       >
-        <div style={{ fontSize: 16 }}>{value.name}</div>
-        <div style={{ fontSize: 12 }}>{value.description}</div>
+        <IconChip
+          background={flowThemeToBackground(theme, "dark")}
+          color={getTextColor()}
+          icon={flowCategoryToIcon(value.category)}
+          size={44}
+        />
+        <div
+          className={css`
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            gap: 2px;
+            color: ${getTextColor()};
+          `}
+        >
+          <div style={{ fontSize: 12, textTransform: "capitalize" }}>
+            {value.category}
+          </div>
+          <div style={{ fontSize: 16 }}>{value.name}</div>
+        </div>
+      </div>
+      <div style={{ fontSize: 12, fontStyle: "italic" }}>
+        {value.description}
       </div>
     </div>
   );

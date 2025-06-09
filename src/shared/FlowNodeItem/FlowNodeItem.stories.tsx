@@ -13,7 +13,7 @@ const meta = {
       category: "output",
       description: "Output node",
       id: "Output",
-      name: "Output",
+      name: "Basic Output",
       properties: [],
       tags: [],
     },

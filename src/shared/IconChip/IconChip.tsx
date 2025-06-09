@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 import "./style.css";
 
 export interface IconChipProps {
@@ -6,13 +6,14 @@ export interface IconChipProps {
   color: string;
   icon: ReactNode;
   size?: number;
+  style?: CSSProperties;
 }
 
 export const IconChip = (props: IconChipProps) => {
-  const { background, color, icon, size = 32 } = props;
+  const { background, color, icon, size = 32, style } = props;
   return (
     <div
-      style={{ background, color, height: size, width: size }}
+      style={{ background, color, height: size, width: size, ...style }}
       className="icon-chip"
     >
       {icon}
