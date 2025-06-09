@@ -2,9 +2,9 @@ import { HTMLProps, ReactNode } from "react";
 import { css } from "@emotion/css";
 import "./style.css";
 import { getTextColor } from "../../theme/Theme";
-import { pink } from "@mui/material/colors";
+import { grey, pink } from "@mui/material/colors";
 
-export type ButtonVariants = "round" | "transparent";
+export type ButtonVariants = "border" | "round" | "transparent";
 
 type BaseProps = Pick<
   HTMLProps<HTMLButtonElement>,
@@ -27,8 +27,14 @@ export const Button = (props: ButtonProps) => {
         "button",
         `variant-${variant}`,
         css`
+          &.variant-border {
+            border-color: ${grey[500]};
+            background: white;
+            color: ${getTextColor()};
+          }
           &.variant-round {
             border-radius: 50%;
+            padding: 8px;
             background: ${pink[400]};
             color: white;
           }
@@ -40,7 +46,15 @@ export const Button = (props: ButtonProps) => {
       ].join(" ")}
       {...rest}
     >
-      {label}
+      {label && (
+        <span
+          className={css`
+            margin-right: ${icon ? 4 : 0}px;
+          `}
+        >
+          {label}
+        </span>
+      )}
       {icon && icon()}
     </button>
   );

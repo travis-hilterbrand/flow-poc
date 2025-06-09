@@ -28,6 +28,14 @@ export const WithIcon: Story = {
   },
 };
 
+export const Border: Story = {
+  args: {
+    icon: () => <AddIcon />,
+    label: "Add",
+    variant: "border",
+  },
+};
+
 export const Round: Story = {
   args: {
     icon: () => <AddIcon />,

@@ -1,13 +1,13 @@
 import { Position, type NodeProps } from "@xyflow/react";
 import { FlowNodeBaseType } from "../types";
 import { FlowNodeBaseHandle } from "./FlowNodeBaseHandle";
-import { FlowNodeItem } from "shared/FlowNodeItem/FlowNodeItem";
+import { FlowNodeItem } from "shared/FlowNodeItem";
 import { useFlowNodes } from "hooks/useFlowNodes";
 
 export const FlowNodeBase = (props: NodeProps<FlowNodeBaseType>) => {
   const { data, selected } = props;
 
-  const { onChangeCollapse } = useFlowNodes();
+  const { onChangeCollapse, onDeleteNode } = useFlowNodes();
 
   return (
     <FlowNodeItem
@@ -17,6 +17,12 @@ export const FlowNodeBase = (props: NodeProps<FlowNodeBaseType>) => {
       schema={data.node.schema}
       onChangeCollapse={(newValue: boolean) => {
         onChangeCollapse({ id: data.node.data.id, newValue });
+      }}
+      onDeleteNode={() => {
+        onDeleteNode(data.node.data.id);
+      }}
+      onDuplicateNode={() => {
+        alert("TODO");
       }}
     >
       <FlowNodeBaseHandle type="target" position={Position.Top} />

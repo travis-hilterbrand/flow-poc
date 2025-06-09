@@ -9,7 +9,7 @@ import { externalToInternalNode } from "./useGetFlowNodes";
 const LOG_ROOT = "[useFlowNodes]";
 
 export const useFlowNodes = () => {
-  const { edgesList, nodesList, setNodesList } = useFlowStore();
+  const { edgesList, nodesList, setEdgesList, setNodesList } = useFlowStore();
 
   const onAddNode = (schema: FlowNodeSchema) => {
     const newNode: FlowNodeInternal = externalToInternalNode({
@@ -27,6 +27,16 @@ export const useFlowNodes = () => {
     setNodesList(newNodeList);
 
     console.info(`${LOG_ROOT} onAddNode(${newNode.id}, ${schema.id})`);
+  };
+
+  const onDeleteNode = (id: string) => {
+    const newEdgeList = [...edgesList].filter(
+      (item) => item.target !== id && item.source !== id
+    );
+    setEdgesList(newEdgeList);
+    const newNodeList = [...nodesList].filter((item) => item.id !== id);
+    setNodesList(newNodeList);
+    console.info(`${LOG_ROOT} onDeleteNode(${id})`);
   };
 
   const onChangeCollapse = useCallback(
@@ -54,6 +64,7 @@ export const useFlowNodes = () => {
     edgesList,
     nodesList,
     onAddNode,
+    onDeleteNode,
     onChangeCollapse,
     onChangeEdgesInternal,
   };
