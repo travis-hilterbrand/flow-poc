@@ -1,12 +1,11 @@
 import { css } from "@emotion/css";
-import AddIcon from "@mui/icons-material/Add";
+import TocIcon from "@mui/icons-material/Toc";
 import { useState } from "react";
 import { Button } from "shared/Button/Button";
 import { Contents } from "./Contents";
 
-export const AddNodePanel = () => {
+export const ResultsPanel = () => {
   const [open, setOpen] = useState(false);
-
   return (
     <>
       <Contents visible={open} onClose={() => setOpen(false)} />
@@ -14,11 +13,11 @@ export const AddNodePanel = () => {
         className={css`
           transition: opacity 600ms;
         `}
-        icon={() => <AddIcon />}
+        icon={() => <TocIcon />}
         style={{
           position: "absolute",
           top: 40,
-          left: 16,
+          right: 16,
           opacity: open ? 0 : 1,
         }}
         variant="round"

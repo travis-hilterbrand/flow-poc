@@ -8,7 +8,7 @@ export type ButtonVariants = "round" | "transparent";
 
 type BaseProps = Pick<
   HTMLProps<HTMLButtonElement>,
-  "id" | "style" | "onBlur" | "onFocus" | "onClick"
+  "className" | "id" | "style" | "onBlur" | "onFocus" | "onClick"
 >;
 export type ButtonProps = BaseProps & {
   icon?: () => ReactNode;
@@ -18,11 +18,12 @@ export type ButtonProps = BaseProps & {
 };
 
 export const Button = (props: ButtonProps) => {
-  const { label, icon, variant = "transparent", ...rest } = props;
+  const { className, label, icon, variant = "transparent", ...rest } = props;
   return (
     <button
       type="button"
       className={[
+        className,
         "button",
         `variant-${variant}`,
         css`

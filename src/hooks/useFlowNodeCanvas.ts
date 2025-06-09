@@ -10,6 +10,8 @@ import { FlowNodeInternal } from "../components/FlowNodeCanvas/types";
 import { useFlowNodes } from "./useFlowNodes";
 import { useGetFlowNodes } from "./useGetFlowNodes";
 
+const LOG_ROOT = "[useFlowNodeCanvas]";
+
 export const useFlowNodeCanvas = () => {
   const { loaded } = useGetFlowNodes();
   const { edgesList, nodesList, onChangeEdgesInternal } = useFlowNodes();
@@ -22,7 +24,7 @@ export const useFlowNodeCanvas = () => {
         const newEdges = addEdge(connection, edges).map((edge) => {
           return { ...edge, animated: true, type: "smoothstep" };
         });
-        console.info(`onConnect()`, { connection, newEdges });
+        console.info(`${LOG_ROOT} onConnect()`, { connection, newEdges });
         onChangeEdgesInternal(newEdges);
         return newEdges;
       });
@@ -42,10 +44,10 @@ export const useFlowNodeCanvas = () => {
   }, [loaded, nodesList, setNodes]);
 
   useEffect(() => {
-    if (loaded) console.info(`edges changed`, edges);
+    if (loaded) console.info(`${LOG_ROOT} edges changed`, edges);
   }, [loaded, edges]);
   useEffect(() => {
-    if (loaded) console.info(`nodes changed`, nodes);
+    if (loaded) console.info(`${LOG_ROOT} nodes changed`, nodes);
   }, [loaded, nodes]);
 
   return { edges, nodes, onConnect, onEdgesChange, onNodesChange };
