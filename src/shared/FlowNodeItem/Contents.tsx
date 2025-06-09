@@ -1,3 +1,4 @@
+import { css } from "@emotion/css";
 import { forwardRef } from "react";
 import { getTextColor } from "../../theme/Theme";
 import { Button } from "../Button/Button";
@@ -10,6 +11,7 @@ import { IconChip } from "../IconChip/IconChip";
 import CollapseIcon from "@mui/icons-material/CloseFullscreen";
 import ExpandIcon from "@mui/icons-material/OpenInFull";
 import { FlowNodeItemProps } from "./types";
+import { FormInput } from "shared/FormInput/FormInput";
 
 export const Contents = forwardRef<HTMLDivElement, FlowNodeItemProps>(
   (props, ref) => {
@@ -56,11 +58,31 @@ export const Contents = forwardRef<HTMLDivElement, FlowNodeItemProps>(
               />
             </div>
           </div>
-          <div className="flow-node-item-bottom">
+          <div
+            className={[
+              "flow-node-item-bottom",
+              css`
+                display: ${collapsed ? "none" : "block"};
+              `,
+            ].join(" ")}
+          >
             <div className="description">{schema.description}</div>
           </div>
         </div>
-        {!collapsed && <div className="flow-node-item-content"></div>}
+        {!collapsed && (
+          <div className="flow-node-item-content">
+            {schema.properties.map((item) => (
+              <FormInput
+                key={item.name}
+                defaultValue=""
+                label={item.label}
+                placeholder={item.placeholder}
+                required={item.required}
+                style={{ width: "100%" }}
+              />
+            ))}
+          </div>
+        )}
         {children}
       </div>
     );

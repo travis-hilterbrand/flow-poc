@@ -1,8 +1,6 @@
-import { HTMLProps } from "react";
+import { forwardRef, HTMLProps } from "react";
 import { InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-
-export type SearchVariants = "round" | "transparent";
 
 type BaseProps = Pick<
   HTMLProps<HTMLInputElement>,
@@ -15,11 +13,12 @@ export type SearchProps = BaseProps & {
   onEnter?: () => void;
 };
 
-export const Search = (props: SearchProps) => {
+export const Search = forwardRef<HTMLDivElement, SearchProps>((props, ref) => {
   const { autoFocus, className, defaultValue, onChange, onEnter, ...rest } =
     props;
   return (
     <TextField
+      ref={ref}
       autoFocus={autoFocus}
       autoComplete={"off"}
       className={className}
@@ -49,4 +48,4 @@ export const Search = (props: SearchProps) => {
       {...rest}
     />
   );
-};
+});

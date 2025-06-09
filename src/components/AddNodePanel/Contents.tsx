@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Search } from "shared/Search/Search";
 import { useFlowNodes } from "hooks/useFlowNodes";
 import { useSearchSchema } from "hooks/useSearchSchema";
@@ -14,10 +14,17 @@ export const Contents = ({ visible, onClose }: ContentsProps) => {
   const [filterTerm, setFilterTerm] = useState("");
   const { filteredSchema } = useSearchSchema(filterTerm);
 
+  const searchRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (visible && searchRef.current) {
+      searchRef.current.querySelector("input")?.focus();
+    }
+  }, [visible]);
+
   return (
     <SidePanel side="left" visible={visible} onClose={() => onClose()}>
       <Search
-        autoFocus
+        ref={searchRef}
         defaultValue=""
         style={{ flexShrink: 0 }}
         onChange={(newValue) => setFilterTerm(newValue)}

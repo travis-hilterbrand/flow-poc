@@ -17,8 +17,10 @@ export type FlowNodeData = {
 };
 
 export type FlowNodeProperty = {
+  label: string;
   name: string;
-  required: boolean;
+  placeholder?: string;
+  required?: boolean;
 };
 
 export type FlowNodeCategories = "input" | "output" | "processor";

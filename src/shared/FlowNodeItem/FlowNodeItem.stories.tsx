@@ -14,7 +14,9 @@ const meta = {
       description: "Output node",
       id: "Output",
       name: "Basic Output",
-      properties: [],
+      properties: [
+        { label: "Default value", name: "defaultValue", required: true },
+      ],
       tags: [],
     },
     onChangeCollapse: fn(),

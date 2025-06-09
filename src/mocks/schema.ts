@@ -5,7 +5,10 @@ export const MockNodeSchemaInput: FlowNodeSchema = {
   description: "Entry point for basic input values.",
   id: "Input",
   name: "Basic Input",
-  properties: [{ name: "value", required: true }],
+  properties: [
+    { label: "Default value", name: "defaultValue", required: true },
+    { label: "Input name", name: "inputName", required: false },
+  ],
   tags: ["input"],
 };
 export const MockNodeSchemaSheets: FlowNodeSchema = {
@@ -22,7 +25,10 @@ export const MockNodeSchemaCombineText: FlowNodeSchema = {
   description: "Combines multiple inputs using a given format",
   id: "CombineText",
   name: "CombineText",
-  properties: [],
+  properties: [
+    { label: "Input to use", name: "useInput", placeholder: "Input to use" },
+    { label: "Format type", name: "formatType", required: true },
+  ],
   tags: ["processor"],
 };
 export const MockNodeSchemaOutput: FlowNodeSchema = {
@@ -30,7 +36,10 @@ export const MockNodeSchemaOutput: FlowNodeSchema = {
   description: "Test node for basic output",
   id: "Output",
   name: "Basic Output",
-  properties: [],
+  properties: [
+    { label: "Input to use", name: "useInput", placeholder: "Input to use" },
+    { label: "Output type", name: "outputType" },
+  ],
   tags: ["output"],
 };
 
