@@ -27,6 +27,12 @@ export const WithIcon: Story = {
     icon: () => <HomeIcon />,
   },
 };
+export const WithIconDisabled: Story = {
+  args: {
+    enabled: false,
+    icon: () => <HomeIcon />,
+  },
+};
 
 export const Border: Story = {
   args: {
@@ -35,9 +41,24 @@ export const Border: Story = {
     variant: "border",
   },
 };
+export const BorderDisabled: Story = {
+  args: {
+    enabled: false,
+    icon: () => <AddIcon />,
+    label: "Add",
+    variant: "border",
+  },
+};
 
 export const Round: Story = {
   args: {
+    icon: () => <AddIcon />,
+    variant: "round",
+  },
+};
+export const RoundDisabled: Story = {
+  args: {
+    enabled: false,
     icon: () => <AddIcon />,
     variant: "round",
   },

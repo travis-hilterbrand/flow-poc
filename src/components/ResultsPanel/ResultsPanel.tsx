@@ -5,7 +5,8 @@ import { Button } from "shared/Button/Button";
 import { Contents } from "./Contents";
 
 export const ResultsPanel = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
+
   return (
     <>
       <Contents visible={open} onClose={() => setOpen(false)} />

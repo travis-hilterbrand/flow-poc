@@ -11,6 +11,7 @@ type BaseProps = Pick<
   "className" | "id" | "style" | "onBlur" | "onFocus" | "onClick"
 >;
 export type ButtonProps = BaseProps & {
+  enabled?: boolean;
   icon?: () => ReactNode;
   label?: string;
   variant?: ButtonVariants;
@@ -18,7 +19,14 @@ export type ButtonProps = BaseProps & {
 };
 
 export const Button = (props: ButtonProps) => {
-  const { className, label, icon, variant = "transparent", ...rest } = props;
+  const {
+    className,
+    enabled = true,
+    label,
+    icon,
+    variant = "transparent",
+    ...rest
+  } = props;
   return (
     <button
       type="button"
@@ -47,8 +55,12 @@ export const Button = (props: ButtonProps) => {
             background: transparent;
             color: ${getTextColor()};
           }
+
+          opacity: ${enabled ? 1.0 : 0.2};
+          cursor: ${enabled ? "pointer" : "auto"};
         `,
       ].join(" ")}
+      disabled={!enabled}
       {...rest}
     >
       {label && (

@@ -2,12 +2,18 @@ import { css } from "@emotion/css";
 import { grey } from "@mui/material/colors";
 import { Button } from "shared/Button/Button";
 import { SidePanel } from "shared/SidePanel/SidePanel";
+import { flowStoreSelector, useFlowStore } from "store/useFlowStore";
+import { useShallow } from "zustand/react/shallow";
+import { useFlowNodesRun } from "hooks/useFlowNodesRun";
 
 type ContentsProps = {
   visible: boolean;
   onClose: () => void;
 };
 export const Contents = ({ visible, onClose }: ContentsProps) => {
+  const { edgesList, nodesList } = useFlowStore(useShallow(flowStoreSelector));
+  const { running, runFlow } = useFlowNodesRun();
+
   return (
     <SidePanel side="right" visible={visible} onClose={() => onClose()}>
       <div
@@ -38,8 +44,15 @@ export const Contents = ({ visible, onClose }: ContentsProps) => {
               gap: 4px;
             `}
           >
-            <Button label="Run" variant={"action"} />
-            <Button label="Resume" variant={"border"} />
+            <Button
+              enabled={!running}
+              label="Run"
+              variant={"action"}
+              onClick={() => {
+                runFlow({ edgesList, nodesList });
+              }}
+            />
+            <Button enabled={!running} label="Resume" variant={"border"} />
           </div>
         </div>
 
