@@ -7,7 +7,6 @@ export const MockNodeSchemaInput: FlowNodeSchema = {
   name: "Basic Input",
   properties: [
     { label: "Default value", name: "defaultValue", required: true },
-    { label: "Input name", name: "inputName", required: false },
   ],
   tags: ["input"],
 };

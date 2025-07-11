@@ -8,18 +8,22 @@ const meta = {
   component: Component,
   args: {
     collapsed: false,
+    data: {
+      defaultValue: "Default input",
+    },
     selected: false,
     schema: {
-      category: "output",
-      description: "Output node",
-      id: "Output",
-      name: "Basic Output",
+      category: "input",
+      description: "Input node",
+      id: "input",
+      name: "Basic Input",
       properties: [
         { label: "Default value", name: "defaultValue", required: true },
       ],
       tags: [],
     },
     onChangeCollapse: fn(),
+    onChangeData: fn(),
     onDeleteNode: fn(),
     onDuplicateNode: fn(),
   },

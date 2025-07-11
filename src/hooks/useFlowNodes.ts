@@ -4,7 +4,7 @@ import { FlowNodeInternal } from "components/FlowNodeCanvas/types";
 import { useCallback } from "react";
 import { v4 } from "uuid";
 import { flowStoreSelector, useFlowStore } from "store/useFlowStore";
-import { FlowNodeSchema } from "types";
+import { FlowNodeProperty, FlowNodeSchema } from "types";
 import { externalToInternalNode } from "./useGetFlowNodes";
 
 const LOG_ROOT = "[useFlowNodes]";
@@ -20,7 +20,7 @@ export const useFlowNodes = () => {
         id: v4(),
         collapsed: false,
         position: { x: 0, y: 0 },
-        properties: [],
+        properties: {},
         type: schema.id,
       },
       schema,
@@ -85,6 +85,23 @@ export const useFlowNodes = () => {
     },
     [nodesList]
   );
+  const onChangeProperty = useCallback(
+    (params: { id: string; property: FlowNodeProperty; newValue: any }) => {
+      console.info(
+        `${LOG_ROOT} onChangeProperty(${params.id}, ${params.property}, ${params.newValue})`
+      );
+      const newNodeList = [...nodesList];
+      const node = newNodeList.find(
+        (item) => item.data.node.data.id === params.id
+      );
+      if (node) {
+        const properties = node.data.node.data.properties;
+        properties[params.property.name] = params.newValue;
+        setNodesList(newNodeList);
+      }
+    },
+    [nodesList, setNodesList]
+  );
 
   return {
     edgesList,
@@ -94,5 +111,6 @@ export const useFlowNodes = () => {
     onChangeCollapse,
     onChangeEdgesInternal,
     onChangeNode,
+    onChangeProperty,
   };
 };

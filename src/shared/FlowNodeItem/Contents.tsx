@@ -11,7 +11,7 @@ import { IconChip } from "../IconChip/IconChip";
 import CollapseIcon from "@mui/icons-material/CloseFullscreen";
 import ExpandIcon from "@mui/icons-material/OpenInFull";
 import { FlowNodeItemProps } from "./types";
-import { FormInput } from "shared/FormInput/FormInput";
+import { FlowNodePropertyInput } from "./FlowNodePropertyInput";
 
 export const Contents = forwardRef<HTMLDivElement, FlowNodeItemProps>(
   (props, ref) => {
@@ -19,9 +19,11 @@ export const Contents = forwardRef<HTMLDivElement, FlowNodeItemProps>(
       children,
       className,
       collapsed,
+      data,
       selected,
       schema,
       onChangeCollapse = () => {},
+      onChangeData = () => {},
     } = props;
     const theme = flowCategoryToTheme(schema.category);
 
@@ -72,13 +74,11 @@ export const Contents = forwardRef<HTMLDivElement, FlowNodeItemProps>(
         {!collapsed && (
           <div className="flow-node-item-content">
             {schema.properties.map((item) => (
-              <FormInput
+              <FlowNodePropertyInput
                 key={item.name}
-                defaultValue=""
-                label={item.label}
-                placeholder={item.placeholder}
-                required={item.required}
-                style={{ width: "100%" }}
+                nodeData={data}
+                property={item}
+                onChange={onChangeData}
               />
             ))}
           </div>

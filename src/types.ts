@@ -5,6 +5,11 @@ export type FlowEdgeData = {
   source: string;
   target: string;
 };
+
+// TODO - expand this with more property types
+export type FlowNodePropertyString = string;
+
+export type FlowNodePropertyDataMap = Record<string, FlowNodePropertyString>;
 export type FlowNodeData = {
   id: string;
   collapsed: boolean;
@@ -12,7 +17,7 @@ export type FlowNodeData = {
     x: number;
     y: number;
   };
-  properties: Record<string, any>;
+  properties: FlowNodePropertyDataMap;
   type: string;
 };
 
