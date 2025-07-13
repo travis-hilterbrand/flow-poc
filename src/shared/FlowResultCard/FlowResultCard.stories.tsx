@@ -1,15 +1,22 @@
 import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
-import { fn } from "storybook/test";
-import { FlowNodeResult as Component } from "./FlowNodeResult";
-import { MockNodeSchemaInput } from "mocks/schema";
+import { FlowResultCard as Component } from "./FlowResultCard";
+import { FlowRunResult } from "types";
+
+const RESULT: FlowRunResult = {
+  category: "input",
+  error: "",
+  success: true,
+  executing: false,
+  executeTime: 3200,
+  result: "Result",
+};
 
 type MetaProps = typeof Component;
 const meta = {
-  title: "FlowNodeResult",
+  title: "FlowResultCard",
   component: Component,
   args: {
-    value: MockNodeSchemaInput,
-    onClick: fn(),
+    value: RESULT,
   },
 } satisfies Meta<MetaProps>;
 
@@ -25,7 +32,4 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: Template,
-  args: {
-    value: MockNodeSchemaInput,
-  },
 };

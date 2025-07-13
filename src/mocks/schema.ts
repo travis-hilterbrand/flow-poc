@@ -24,10 +24,7 @@ export const MockNodeSchemaCombineText: FlowNodeSchema = {
   description: "Combines multiple inputs using a given format",
   id: "CombineText",
   name: "CombineText",
-  properties: [
-    { label: "Input to use", name: "useInput", placeholder: "Input to use" },
-    { label: "Format type", name: "formatType", required: true },
-  ],
+  properties: [],
   tags: ["processor"],
 };
 export const MockNodeSchemaOutput: FlowNodeSchema = {

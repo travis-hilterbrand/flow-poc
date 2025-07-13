@@ -9,6 +9,10 @@ import { executeAction } from "./action";
 
 const LOG_ROOT = "[executeFlow]";
 
+const copyResults = (results: FlowRunResults) => {
+  return JSON.parse(JSON.stringify(results));
+};
+
 type ExecuteFlowParams = {
   edges: Edge[];
   nodes: FlowNode[];
@@ -38,89 +42,13 @@ export async function* executeFlow(
   };
 
   results.executing = true;
-  yield { ...results };
+  yield copyResults(results);
 
-  // find input nodes
-  const inputNodes: FlowNode[] = [];
-  for (const node of nodes) {
-    const hasEdge = edges.find((item) => item.target === node.data.id);
-    if (!hasEdge) {
-      inputNodes.push(node);
-    }
-  }
-  console.info(`${LOG_ROOT} inputNodes`, inputNodes);
-
-  // process input nodes
   let flowSuccess = true;
   const processQueue: ProcessQueueItem[] = [];
   const interimResults: FlowRunInterimResults = {};
-  for (const inputNode of inputNodes) {
-    const nodeResult: FlowRunResult = {
-      category: inputNode.schema.category,
-      error: "",
-      success: false,
-      executeTime: 0,
-      executing: true,
-      result: "",
-    };
-    results.results.push(nodeResult);
-    yield { ...results };
 
-    const actionResult = await executeAction(
-      inputNode.data,
-      edges,
-      interimResults
-    );
-    nodeResult.executeTime = actionResult.executeTime;
-    nodeResult.executing = false;
-    nodeResult.error = actionResult.error;
-    nodeResult.success = actionResult.success;
-    nodeResult.result = actionResult.result;
-    if (actionResult.success) {
-      interimResults[inputNode.data.id] = {
-        nodeId: inputNode.data.id,
-        result: actionResult.result,
-      };
-    } else {
-      flowSuccess = false;
-    }
-    console.info(
-      `${LOG_ROOT} executeAction(${inputNode.data.id})`,
-      actionResult
-    );
-
-    const outputEdges = edges.filter(
-      (item) => item.source === inputNode.data.id
-    );
-    for (const edge of outputEdges) {
-      processQueue.push({ nodeId: edge.target });
-    }
-  }
-
-  // continue
-  while (processQueue.length > 0) {
-    const queueItem = processQueue.shift();
-    if (!queueItem) break;
-
-    console.info(
-      `${LOG_ROOT} process(${queueItem.nodeId})`,
-      JSON.stringify(queueItem)
-    );
-
-    const node = nodes.find((item) => item.data.id === queueItem.nodeId);
-    if (!node) throw new Error("unexpected process error");
-
-    const nodeResult: FlowRunResult = {
-      category: node.schema.category,
-      error: "",
-      success: false,
-      executeTime: 0,
-      executing: true,
-      result: "",
-    };
-    results.results.push(nodeResult);
-    yield { ...results };
-
+  const processNode = async (node: FlowNode, nodeResult: FlowRunResult) => {
     const actionResult = await executeAction(node.data, edges, interimResults);
     nodeResult.executeTime = actionResult.executeTime;
     nodeResult.executing = false;
@@ -139,27 +67,64 @@ export async function* executeFlow(
 
     const outputEdges = edges.filter((item) => item.source === node.data.id);
     for (const edge of outputEdges) {
-      processQueue.push({ nodeId: edge.target });
+      if (!processQueue.find((item) => item.nodeId === edge.target)) {
+        processQueue.push({ nodeId: edge.target });
+      }
     }
+  };
 
-    /*
-    nodeResult.executeTime = actionResult.executeTime;
-    nodeResult.executing = false;
-    nodeResult.error = actionResult.error;
-    nodeResult.success = actionResult.success;
-    nodeResult.result = actionResult.result;
-    if (!actionResult.success) {
-    flowSuccess = false;
+  // find input nodes
+  const inputNodes: FlowNode[] = [];
+  for (const node of nodes) {
+    const hasEdge = edges.find((item) => item.target === node.data.id);
+    if (!hasEdge) {
+      inputNodes.push(node);
     }
-    console.info(
-    `${LOG_ROOT} executeAction(${inputNode.data.id})`,
-    actionResult
-    );
-    */
+  }
+  console.info(`${LOG_ROOT} inputNodes`, inputNodes);
+
+  // process input nodes
+  for (const inputNode of inputNodes) {
+    const nodeResult: FlowRunResult = {
+      category: inputNode.schema.category,
+      error: "",
+      success: false,
+      executeTime: 0,
+      executing: true,
+      result: "",
+    };
+    results.results.push(nodeResult);
+    yield copyResults(results);
+
+    await processNode(inputNode, nodeResult);
+    yield copyResults(results);
+  }
+
+  // continue
+  while (processQueue.length > 0) {
+    const queueItem = processQueue.shift();
+    if (!queueItem) break;
+
+    const node = nodes.find((item) => item.data.id === queueItem.nodeId);
+    if (!node) throw new Error("unexpected process error");
+
+    const nodeResult: FlowRunResult = {
+      category: node.schema.category,
+      error: "",
+      success: false,
+      executeTime: 0,
+      executing: true,
+      result: "",
+    };
+    results.results.push(nodeResult);
+    yield copyResults(results);
+
+    await processNode(node, nodeResult);
+    yield copyResults(results);
   }
 
   results.totalExecuteTime = Date.now() - startTime;
   results.executing = false;
   results.success = flowSuccess;
-  yield { ...results };
+  yield copyResults(results);
 }

@@ -6,7 +6,7 @@ describe("executeAction()", () => {
       {
         id: "",
         collapsed: false,
-        position: { x: 100, y: 0 },
+        position: { x: 0, y: 0 },
         properties: {},
         type: "unknown",
       },
@@ -18,13 +18,13 @@ describe("executeAction()", () => {
     expect(result.result).toEqual("");
   });
 
-  it("processes input", async () => {
+  it("processes Input", async () => {
     const defaultValueProp = "Default value";
     const result = await executeAction(
       {
         id: "",
         collapsed: false,
-        position: { x: 100, y: 0 },
+        position: { x: 0, y: 0 },
         properties: { defaultValue: defaultValueProp },
         type: "Input",
       },
@@ -36,13 +36,13 @@ describe("executeAction()", () => {
     expect(result.result).toEqual(defaultValueProp);
   });
 
-  it("processes output", async () => {
+  it("processes Output", async () => {
     const defaultValueProp = "Default value";
     const result = await executeAction(
       {
         id: "output-1",
         collapsed: false,
-        position: { x: 100, y: 0 },
+        position: { x: 0, y: 0 },
         properties: {},
         type: "Output",
       },
@@ -52,5 +52,30 @@ describe("executeAction()", () => {
     expect(result.error).toEqual("");
     expect(result.success).toEqual(true);
     expect(result.result).toEqual(defaultValueProp);
+  });
+
+  it("processes CombineText", async () => {
+    const combine1 = "combine-1";
+    const combine2 = "combine-2";
+    const result = await executeAction(
+      {
+        id: "combine-1",
+        collapsed: false,
+        position: { x: 0, y: 0 },
+        properties: {},
+        type: "CombineText",
+      },
+      [
+        { id: "", source: "input-1", target: "combine-1" },
+        { id: "", source: "input-2", target: "combine-1" },
+      ],
+      {
+        "input-1": { nodeId: "input-1", result: combine1 },
+        "input-2": { nodeId: "input-2", result: combine2 },
+      }
+    );
+    expect(result.error).toEqual("");
+    expect(result.success).toEqual(true);
+    expect(result.result).toEqual(combine1 + "\n" + combine2);
   });
 });

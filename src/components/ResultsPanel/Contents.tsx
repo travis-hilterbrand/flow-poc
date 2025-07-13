@@ -5,6 +5,8 @@ import { SidePanel } from "shared/SidePanel/SidePanel";
 import { flowStoreSelector, useFlowStore } from "store/useFlowStore";
 import { useShallow } from "zustand/react/shallow";
 import { useFlowNodesRun } from "hooks/useFlowNodesRun";
+import { FlowResultCard } from "shared/FlowResultCard/FlowResultCard";
+import { ResultChip } from "shared/FlowResultCard/ResultChip";
 
 type ContentsProps = {
   visible: boolean;
@@ -12,7 +14,7 @@ type ContentsProps = {
 };
 export const Contents = ({ visible, onClose }: ContentsProps) => {
   const { edgesList, nodesList } = useFlowStore(useShallow(flowStoreSelector));
-  const { running, runFlow } = useFlowNodesRun();
+  const { results, running, runFlow } = useFlowNodesRun();
 
   return (
     <SidePanel side="right" visible={visible} onClose={() => onClose()}>
@@ -35,7 +37,18 @@ export const Contents = ({ visible, onClose }: ContentsProps) => {
             padding: 16px;
           `}
         >
-          <span>Results</span>
+          <div
+            className={css`
+              display: inline-flex;
+              flow-direction: column;
+              gap: 8px;
+            `}
+          >
+            <span>Results</span>
+            {!results.executing && results.results.length > 0 && (
+              <ResultChip success={results.success} />
+            )}
+          </div>
           <div
             className={css`
               display: flex;
@@ -59,8 +72,17 @@ export const Contents = ({ visible, onClose }: ContentsProps) => {
           className={css`
             width: 100%;
             overflow: hidden auto;
+            padding: 8px 16px;
           `}
-        ></div>
+        >
+          {results.results.map((item, index) => (
+            <FlowResultCard
+              key={`${index}-${item.category}`}
+              value={item}
+              style={{ marginBottom: 16 }}
+            />
+          ))}
+        </div>
       </div>
     </SidePanel>
   );

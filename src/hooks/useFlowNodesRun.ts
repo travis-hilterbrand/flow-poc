@@ -3,7 +3,7 @@ import {
   FlowEdgeInternal,
   FlowNodeInternal,
 } from "components/FlowNodeCanvas/types";
-import { FlowRunResults } from "types";
+import { FlowNode, FlowRunResults } from "types";
 import { executeFlow } from "mocks/execute";
 import { sleep } from "utils";
 
@@ -23,49 +23,17 @@ export const useFlowNodesRun = () => {
 
   const runFlow = async (params: RunFlowParams) => {
     console.info(`${LOG_ROOT} runFlow()`, params);
-    const generator = executeFlow({ edges: [], nodes: [] });
+
+    const nodes: FlowNode[] = params.nodesList.map((item) => item.data.node);
+    const generator = executeFlow({ edges: params.edgesList, nodes });
+    let i = 0;
     for await (const result of generator) {
-      console.info(`${LOG_ROOT} runFlow() step`, JSON.stringify(result));
+      console.info(`${LOG_ROOT} runFlow() step[${i}]`, JSON.stringify(result));
       setResults(result);
       await sleep(1000);
+      i++;
     }
-
-    /*
-    setResults({
-      ...results,
-      executing: true,
-      results: [
-        {
-          category: "input",
-          error: "",
-          success: true,
-          executing: true,
-          executeTime: 0,
-        },
-      ],
-    });
-    await sleep(750);
-    setResults({
-      ...results,
-      results: [
-        {
-          category: "input",
-          error: "",
-          success: true,
-          executing: false,
-          executeTime: 750,
-        },
-        {
-          category: "input",
-          error: "",
-          success: true,
-          executing: true,
-          executeTime: 0,
-        },
-      ],
-    });
-    */
   };
 
-  return { runFlow, running: results.executing };
+  return { results, runFlow, running: results.executing };
 };

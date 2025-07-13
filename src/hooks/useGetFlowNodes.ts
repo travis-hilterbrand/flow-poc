@@ -3,7 +3,7 @@ import {
   FlowEdgeInternal,
   FlowNodeInternal,
 } from "../components/FlowNodeCanvas/types";
-import { MockFlow } from "../mocks/flows";
+import { MockFlowComplex as MockFlow } from "../mocks/flows";
 import { FlowEdgeData, FlowNode, FlowNodeData } from "../types";
 import { useGetSchema } from "./useGetSchema";
 import { GetSchemaResponse } from "../api/schema";

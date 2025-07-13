@@ -1,5 +1,6 @@
 import { css } from "@emotion/css";
 import { CSSProperties } from "react";
+import { Chip } from "shared/Chip/Chip";
 import {
   flowCategoryToIcon,
   flowCategoryToTheme,
@@ -7,18 +8,16 @@ import {
 } from "shared/FlowThemes";
 import { IconChip } from "shared/IconChip/IconChip";
 import { getTextColor } from "theme/Theme";
-import { FlowNodeSchema } from "types";
+import { FlowRunResult } from "types";
+import { ResultChip } from "./ResultChip";
 
-export type FlowNodeResultVariants = "round" | "transparent";
-
-export type FlowNodeResultProps = {
+export type FlowResultCardProps = {
   style?: CSSProperties;
-  value: FlowNodeSchema;
-  onClick: (value: FlowNodeSchema) => void;
+  value: FlowRunResult;
 };
 
-export const FlowNodeResult = (props: FlowNodeResultProps) => {
-  const { style, value, onClick } = props;
+export const FlowResultCard = (props: FlowResultCardProps) => {
+  const { style, value } = props;
   const theme = flowCategoryToTheme(value.category);
 
   return (
@@ -34,7 +33,6 @@ export const FlowNodeResult = (props: FlowNodeResultProps) => {
         padding: 8px;
       `}
       style={style}
-      onClick={() => onClick(value)}
     >
       <div
         className={css`
@@ -58,15 +56,27 @@ export const FlowNodeResult = (props: FlowNodeResultProps) => {
             color: ${getTextColor()};
           `}
         >
-          <div style={{ fontSize: 12, textTransform: "capitalize" }}>
+          <div style={{ fontSize: 16, textTransform: "capitalize" }}>
             {value.category}
           </div>
-          <div style={{ fontSize: 16 }}>{value.name}</div>
         </div>
       </div>
-      <div style={{ fontSize: 12, fontStyle: "italic" }}>
-        {value.description}
-      </div>
+
+      <div>{value.result}</div>
+
+      {!value.executing && (
+        <div
+          className={css`
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            margin-top: 8px;
+          `}
+        >
+          <Chip color="grey" text={value.executeTime.toString()} />
+          <ResultChip success={value.success} />
+        </div>
+      )}
     </div>
   );
 };

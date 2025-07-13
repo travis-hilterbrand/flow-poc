@@ -25,6 +25,22 @@ export const executeAction = async (
         executeTime: Date.now() - startTime,
         result: node.properties["defaultValue"],
       });
+    } else if (node.type === "CombineText") {
+      await sleep(200);
+
+      const resultsString: string[] = [];
+      const edgesMatch = edges.filter((item) => item.target === node.id);
+      for (const edge of edgesMatch) {
+        if (edge && results[edge.source]) {
+          resultsString.push(results[edge.source].result);
+        }
+      }
+      return Promise.resolve({
+        error: "",
+        success: true,
+        executeTime: Date.now() - startTime,
+        result: resultsString.join("\n"),
+      });
     } else if (node.type === "Output") {
       await sleep(100);
 
