@@ -35,10 +35,7 @@ export const MockNodeSchemaOutput: FlowNodeSchema = {
   description: "Test node for basic output",
   id: "Output",
   name: "Basic Output",
-  properties: [
-    { label: "Input to use", name: "useInput", placeholder: "Input to use" },
-    { label: "Output type", name: "outputType" },
-  ],
+  properties: [],
   tags: ["output"],
 };
 

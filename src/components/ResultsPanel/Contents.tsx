@@ -52,7 +52,6 @@ export const Contents = ({ visible, onClose }: ContentsProps) => {
                 runFlow({ edgesList, nodesList });
               }}
             />
-            <Button enabled={!running} label="Resume" variant={"border"} />
           </div>
         </div>
 

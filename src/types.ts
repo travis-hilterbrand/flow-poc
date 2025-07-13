@@ -1,5 +1,3 @@
-import { StandardAPIErrorWithDetail } from "./http/errors";
-
 export type FlowEdgeData = {
   id: string;
   source: string;
@@ -46,7 +44,23 @@ export type FlowNode = {
   schema: FlowNodeSchema;
 };
 
-export type FlowResultErrorDetail = {
-  results: { success: boolean; error: string }[];
+export type FlowRunResult = {
+  category: FlowNodeCategories;
+  error: string;
+  success: boolean;
+  executing: boolean;
+  executeTime: number;
+  result: string;
 };
-export type FlowResultError = StandardAPIErrorWithDetail<FlowResultErrorDetail>;
+export type FlowRunResults = {
+  success: boolean;
+  executing: boolean;
+  totalExecuteTime: number;
+  results: FlowRunResult[];
+};
+
+export type FlowRunInterimResult = {
+  nodeId: string;
+  result: string;
+};
+export type FlowRunInterimResults = Record<string, FlowRunInterimResult>;
