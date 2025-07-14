@@ -1,13 +1,34 @@
-import { StandardAPIErrorWithDetail } from "./http/errors";
+export type FlowEdgeData = {
+  id: string;
+  source: string;
+  target: string;
+};
+
+// TODO - expand this with more property types
+export type FlowNodePropertyString = string;
+
+export type FlowNodePropertyDataMap = Record<string, FlowNodePropertyString>;
+export type FlowNodeData = {
+  id: string;
+  collapsed: boolean;
+  position: {
+    x: number;
+    y: number;
+  };
+  properties: FlowNodePropertyDataMap;
+  type: string;
+};
 
 export type FlowNodeProperty = {
+  label: string;
   name: string;
-  required: boolean;
+  placeholder?: string;
+  required?: boolean;
 };
 
 export type FlowNodeCategories = "input" | "output" | "processor";
 
-export type FlowThemes = "brown" | "grey" | "yellow";
+export type FlowThemes = "blue" | "grey" | "yellow";
 
 export type FlowNodeSchema = {
   category: FlowNodeCategories;
@@ -19,35 +40,27 @@ export type FlowNodeSchema = {
 };
 
 export type FlowNode = {
-  id: string;
-  properties: Record<string, any>;
-  type: string;
-};
-export type Flow = {
-  flows: FlowNode[];
-  id: string;
-};
-export type Project = {
-  id: string;
-  flow: string;
+  data: FlowNodeData;
+  schema: FlowNodeSchema;
 };
 
-export type FlowResultErrorDetail = {
-  results: { success: boolean; error: string }[];
-};
-export type FlowResultError = StandardAPIErrorWithDetail<FlowResultErrorDetail>;
-
-export type FlowResult = {
-  node: FlowNode;
-  nodeSchema: FlowNodeSchema;
+export type FlowRunResult = {
+  category: FlowNodeCategories;
+  error: string;
+  success: boolean;
+  executing: boolean;
+  executeTime: number;
   result: string;
-  runtime: number;
 };
-export type FlowResults = {
-  results: FlowResult[];
+export type FlowRunResults = {
+  success: boolean;
+  executing: boolean;
+  totalExecuteTime: number;
+  results: FlowRunResult[];
 };
 
-export type FlowNodeRun = {
-  node: FlowNode;
-  nodeSchema: FlowNodeSchema;
+export type FlowRunInterimResult = {
+  nodeId: string;
+  result: string;
 };
+export type FlowRunInterimResults = Record<string, FlowRunInterimResult>;

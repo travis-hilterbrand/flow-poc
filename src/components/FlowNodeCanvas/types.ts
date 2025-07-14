@@ -1,4 +1,14 @@
-import type { Node } from "@xyflow/react";
+import type { Edge, Node } from "@xyflow/react";
+import { FlowNode } from "../../types";
 
-export type FlowNodeItemBaseType = Node<{ label: string }, "item-base">;
-export type AppNodes = FlowNodeItemBaseType;
+export type FlowEdgeInternal = Omit<Edge, "animated" | "type"> & {
+  animated: true;
+  type: "smoothstep";
+};
+export type FlowNodeInternal = Omit<Node, "data" | "type"> & {
+  data: { node: FlowNode };
+  type: "FlowNodeBase";
+};
+
+export type FlowNodeBaseType = Node<{ node: FlowNode }, "FlowNodeBase">;
+export type AppNodes = FlowNodeBaseType;

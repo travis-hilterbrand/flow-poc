@@ -1,39 +1,28 @@
-import { getTextColor } from "../../theme/Theme";
-import { FlowNodeSchema } from "../../types";
-import {
-  flowCategoryToIcon,
-  flowCategoryToTheme,
-  flowThemeToBackground,
-} from "../FlowThemes";
-import { IconChip } from "../IconChip/IconChip";
+import { useState } from "react";
 import "./style.css";
+import { FlowNodeItemProps } from "./types";
+import { Contents } from "./Contents";
+import { Toolbar } from "./Toolbar";
 
-export interface FlowNodeItemProps {
-  collapsed: boolean;
-  schema: FlowNodeSchema;
-}
+const TOOLBAR_HEIGHT = 75;
 
 export const FlowNodeItem = (props: FlowNodeItemProps) => {
-  const { schema } = props;
-  const theme = flowCategoryToTheme(schema.category);
+  const { forceToolbarOpen = false } = props;
+
+  const [toolbarOpen, setToolbarOpen] = useState(false);
 
   return (
     <div
-      className="flow-node-item"
-      style={{ background: flowThemeToBackground(theme, "light") }}
+      className={"flow-node-item-container"}
+      onMouseEnter={() => setToolbarOpen(true)}
+      onMouseLeave={() => setToolbarOpen(false)}
     >
-      <div className="top">
-        <IconChip
-          background={flowThemeToBackground(theme, "dark")}
-          color={getTextColor()}
-          icon={flowCategoryToIcon(schema.category)}
-          size={52}
-        />
-        <div className="top-right">
-          <div className="name">{schema.name}</div>
-          <div className="description">{schema.description}</div>
-        </div>
-      </div>
+      <Toolbar
+        {...props}
+        toolbarHeight={TOOLBAR_HEIGHT}
+        toolbarOpen={toolbarOpen || forceToolbarOpen}
+      />
+      <Contents {...props} />
     </div>
   );
 };

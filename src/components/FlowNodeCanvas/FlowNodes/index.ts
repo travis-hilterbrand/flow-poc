@@ -1,4 +1,4 @@
 import { NodeTypes } from "@xyflow/react";
-import { FlowNodeItemBase } from "./FlowNodeItemBase";
+import { FlowNodeBase } from "./FlowNodeBase";
 
-export const nodeTypes = { "item-base": FlowNodeItemBase } satisfies NodeTypes;
+export const nodeTypes = { "FlowNodeBase": FlowNodeBase } satisfies NodeTypes;

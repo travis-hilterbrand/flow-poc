@@ -1,7 +1,7 @@
 {
   "name": "flow-poc",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -28,8 +28,9 @@
     "msw": "^2.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "styled-components": "^6.1.11",
-    "uuid": "^11.1.0"
+    "styled-components": "^6.1.18",
+    "uuid": "^11.1.0",
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
@@ -40,21 +41,20 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
-    "@typescript-eslint/eslint-plugin": "^7.2.0",
-    "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react": "^4.2.1",
-    "@vitest/ui": "^3.1.4",
+    "@vitest/ui": "^3.2.4",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
     "eslint-plugin-storybook": "^9.0.4",
-    "globals": "^16.2.0",
+    "globals": "^16.0.0",
     "jsdom": "^26.1.0",
     "storybook": "^9.0.4",
-    "typescript": "^5.2.2",
-    "typescript-eslint": "^8.33.1",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.30.1",
     "vite": "^5.2.0",
-    "vitest": "^3.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.4"
   },
   "msw": {
     "workerDirectory": [

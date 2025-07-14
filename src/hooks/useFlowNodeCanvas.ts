@@ -1,37 +1,49 @@
-import { useNodesState, useEdgesState } from "@xyflow/react";
-import { useEffect } from "react";
+import { OnConnect, OnNodeDrag, Node, addEdge } from "@xyflow/react";
+import { MouseEvent, useCallback } from "react";
+import { useGetFlowNodes } from "./useGetFlowNodes";
+import { flowStoreSelector, useFlowStore } from "store/useFlowStore";
+import { useShallow } from "zustand/react/shallow";
+import { FlowEdgeInternal } from "components/FlowNodeCanvas/types";
+
+const LOG_ROOT = "[useFlowNodeCanvas]";
 
 export const useFlowNodeCanvas = () => {
-  const [edges, , onEdgesChange] = useEdgesState([]);
-  const [nodes, , onNodesChange] = useNodesState([
-    {
-      id: "1",
-      type: "item-base",
-      position: { x: 0, y: 0 },
-      data: { label: "Node 1" },
-    },
-  ]);
-  /*
+  useGetFlowNodes();
+  const { edgesList, setEdgesList, nodesList, onEdgesChange, onNodesChange } =
+    useFlowStore(useShallow(flowStoreSelector));
+
   const onConnect: OnConnect = useCallback(
     (connection) => {
-      setEdges((edges) => {
-        const newEdges = addEdge(connection, edges).map((edge) => {
-          return { ...edge, animated: true };
-        });
-        console.info(`onConnect()`, { connection, newEdges });
-        return newEdges;
+      const newEdges: FlowEdgeInternal[] = addEdge<FlowEdgeInternal>(
+        connection,
+        edgesList
+      ).map((edge) => {
+        return { ...edge, animated: true, type: "smoothstep" };
       });
+      console.info(`${LOG_ROOT} onConnect()`, {
+        connection,
+        edgesList,
+        newEdges,
+      });
+      setEdgesList(newEdges);
     },
-    [setEdges]
+    [edgesList, setEdgesList]
   );
-*/
 
-  useEffect(() => {
-    console.info(`edges changed`, edges);
-  }, [edges]);
-  useEffect(() => {
-    console.info(`nodes changed`, nodes);
-  }, [nodes]);
+  const onNodeDragStop: OnNodeDrag = useCallback(
+    (event: MouseEvent, node: Node) => {
+      console.info(`${LOG_ROOT} onNodeDragStop()`, { event, node });
+      // TODO_PERSIST
+    },
+    []
+  );
 
-  return { edges, nodes, onEdgesChange, onNodesChange };
+  return {
+    edges: edgesList,
+    nodes: nodesList,
+    onEdgesChange,
+    onNodesChange,
+    onConnect,
+    onNodeDragStop,
+  };
 };

@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactFlowProvider } from "@xyflow/react";
 import { MainView } from "./components/MainView";
 import { CssBaseline } from "@mui/material";
 
@@ -13,8 +14,10 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <CssBaseline />
-      <MainView />
+      <ReactFlowProvider>
+        <CssBaseline />
+        <MainView />
+      </ReactFlowProvider>
     </QueryClientProvider>
   );
 }
