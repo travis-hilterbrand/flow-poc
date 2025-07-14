@@ -1,5 +1,5 @@
 import { css } from "@emotion/css";
-import { CSSProperties } from "react";
+import { CSSProperties, useMemo } from "react";
 import { Chip } from "shared/Chip/Chip";
 import {
   flowCategoryToIcon,
@@ -19,6 +19,10 @@ export type FlowResultCardProps = {
 export const FlowResultCard = (props: FlowResultCardProps) => {
   const { style, value } = props;
   const theme = flowCategoryToTheme(value.category);
+
+  const timeText = useMemo(() => {
+    return `${value.executeTime}ms`;
+  }, [value.executeTime]);
 
   return (
     <div
@@ -73,7 +77,7 @@ export const FlowResultCard = (props: FlowResultCardProps) => {
             margin-top: 8px;
           `}
         >
-          <Chip color="grey" text={value.executeTime.toString()} />
+          <Chip color="grey" text={timeText} />
           <ResultChip success={value.success} />
         </div>
       )}

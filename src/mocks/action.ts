@@ -18,7 +18,7 @@ export const executeAction = async (
   const startTime = Date.now();
   try {
     if (node.type === "Input") {
-      await sleep(100);
+      await sleep(150);
       return Promise.resolve({
         error: "",
         success: true,
@@ -26,7 +26,7 @@ export const executeAction = async (
         result: node.properties["defaultValue"],
       });
     } else if (node.type === "CombineText") {
-      await sleep(200);
+      await sleep(2200);
 
       const resultsString: string[] = [];
       const edgesMatch = edges.filter((item) => item.target === node.id);
@@ -42,7 +42,7 @@ export const executeAction = async (
         result: resultsString.join("\n"),
       });
     } else if (node.type === "Output") {
-      await sleep(100);
+      await sleep(250);
 
       let result = "";
       let error = false;

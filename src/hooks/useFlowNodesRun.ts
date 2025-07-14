@@ -5,7 +5,6 @@ import {
 } from "components/FlowNodeCanvas/types";
 import { FlowNode, FlowRunResults } from "types";
 import { executeFlow } from "mocks/execute";
-import { sleep } from "utils";
 
 const LOG_ROOT = "[useFlowNodesRun]";
 
@@ -30,7 +29,6 @@ export const useFlowNodesRun = () => {
     for await (const result of generator) {
       console.info(`${LOG_ROOT} runFlow() step[${i}]`, JSON.stringify(result));
       setResults(result);
-      await sleep(1000);
       i++;
     }
   };

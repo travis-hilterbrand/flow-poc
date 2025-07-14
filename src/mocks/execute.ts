@@ -33,6 +33,7 @@ export async function* executeFlow(
   const { edges, nodes } = params;
 
   const startTime = Date.now();
+  console.info(`${LOG_ROOT} executeFlow() start`, params);
 
   const results: FlowRunResults = {
     success: false,
@@ -122,6 +123,8 @@ export async function* executeFlow(
     await processNode(node, nodeResult);
     yield copyResults(results);
   }
+
+  console.info(`${LOG_ROOT} executeFlow() done`, params);
 
   results.totalExecuteTime = Date.now() - startTime;
   results.executing = false;

@@ -5,7 +5,7 @@ import { Button } from "shared/Button/Button";
 import { Contents } from "./Contents";
 
 export const ResultsPanel = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
