@@ -3,8 +3,8 @@
 ## Overview
 
 POC for an application to edit & execute flows
-Flows are collections of nodes & connections that execute actions
-Actions are short/long-running tasks that accept input, perform user-defined actions on the input, and generate output
+- Flows are collections of nodes & connections that execute actions
+- Actions are short/long-running tasks that accept input, perform user-defined actions on the input, and generate output
 
 ## Foundation
 
@@ -16,6 +16,8 @@ Actions are short/long-running tasks that accept input, perform user-defined act
   - Properties can be of various types (string, enum, number, etc)
 - Executing flows is performed within the application
   - Results are displayed in a side panel
+- Uses react-flow library for flow display (https://reactflow.dev/)
+  - Flow nodes can be completely customized. See Storybook `FlowNodeItem` for details 
 
 ## Decisions
 
@@ -31,6 +33,12 @@ Actions are short/long-running tasks that accept input, perform user-defined act
 
 - more property types
 - history + version control
+
+## Install and run
+
+- install `npm i`
+- run app `npm run dev`
+- run storybook `npm run storybook`
 
 ## Types
 
