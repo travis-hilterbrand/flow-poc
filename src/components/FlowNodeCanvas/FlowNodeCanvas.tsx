@@ -7,17 +7,25 @@ type FlowNodeCanvasProps = {
   //flow: Flow;
 };
 export const FlowNodeCanvas = (_props: FlowNodeCanvasProps) => {
-  const { edges, nodes, onConnect, onEdgesChange, onNodesChange } = useFlowNodeCanvas();
+  const {
+    edges,
+    nodes,
+    onEdgesChange,
+    onNodesChange,
+    onConnect,
+    onNodeDragStop,
+  } = useFlowNodeCanvas();
 
   return (
     <ReactFlow
-      onConnect={onConnect}
+      fitView
       edges={edges}
-      onEdgesChange={onEdgesChange}
       nodes={nodes}
       nodeTypes={nodeTypes}
+      onConnect={onConnect}
+      onEdgesChange={onEdgesChange}
+      onNodeDragStop={onNodeDragStop}
       onNodesChange={onNodesChange}
-      fitView
     >
       <Background />
       <Controls orientation={"horizontal"} position={"bottom-right"} />

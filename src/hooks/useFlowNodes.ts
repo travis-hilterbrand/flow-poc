@@ -1,4 +1,3 @@
-import { Edge } from "@xyflow/react";
 import { useShallow } from "zustand/react/shallow";
 import { FlowNodeInternal } from "components/FlowNodeCanvas/types";
 import { useCallback } from "react";
@@ -10,7 +9,7 @@ import { externalToInternalNode } from "./useGetFlowNodes";
 const LOG_ROOT = "[useFlowNodes]";
 
 export const useFlowNodes = () => {
-  const { edgesList, nodesList, setEdgesList, setNodesList } = useFlowStore(
+  const { edgesList, setEdgesList, nodesList, setNodesList } = useFlowStore(
     useShallow(flowStoreSelector)
   );
 
@@ -58,37 +57,11 @@ export const useFlowNodes = () => {
     },
     [nodesList, setNodesList]
   );
-  const onChangeEdgesInternal = useCallback((_newEdges: Edge[]) => {
-    // triggered when users connect/disconnect nodes
-    // TODO - persist
-  }, []);
-  const onChangeNode = useCallback(
-    (changedNodesList: FlowNodeInternal[]) => {
-      if (changedNodesList.length === nodesList.length) {
-        const newNodesList = [...nodesList];
-        let changed = false;
-        for (let i = 0; i < changedNodesList.length; i++) {
-          if (
-            changedNodesList[i] &&
-            nodesList[i] &&
-            changedNodesList[i].position !== nodesList[i].position
-          ) {
-            changed = true;
-            newNodesList[i].position = nodesList[i].position;
-          }
-        }
-        if (changed) {
-          // TODO - use zustand setup from MindMap
-          //setNodesList(newNodesList);
-        }
-      }
-    },
-    [nodesList]
-  );
+
   const onChangeProperty = useCallback(
     (params: { id: string; property: FlowNodeProperty; newValue: any }) => {
       console.info(
-        `${LOG_ROOT} onChangeProperty(${params.id}, ${params.property}, ${params.newValue})`
+        `${LOG_ROOT} onChangeProperty(${params.id}, ${params.property.name}, ${params.newValue})`
       );
       const newNodeList = [...nodesList];
       const node = newNodeList.find(
@@ -104,13 +77,9 @@ export const useFlowNodes = () => {
   );
 
   return {
-    edgesList,
-    nodesList,
     onAddNode,
     onDeleteNode,
     onChangeCollapse,
-    onChangeEdgesInternal,
-    onChangeNode,
     onChangeProperty,
   };
 };

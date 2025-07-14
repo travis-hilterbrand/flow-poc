@@ -1,60 +1,49 @@
-import {
-  useNodesState,
-  useEdgesState,
-  OnConnect,
-  addEdge,
-  Edge,
-} from "@xyflow/react";
-import { useCallback, useEffect } from "react";
-import { FlowNodeInternal } from "../components/FlowNodeCanvas/types";
-import { useFlowNodes } from "./useFlowNodes";
+import { OnConnect, OnNodeDrag, Node, addEdge } from "@xyflow/react";
+import { MouseEvent, useCallback } from "react";
 import { useGetFlowNodes } from "./useGetFlowNodes";
+import { flowStoreSelector, useFlowStore } from "store/useFlowStore";
+import { useShallow } from "zustand/react/shallow";
+import { FlowEdgeInternal } from "components/FlowNodeCanvas/types";
 
 const LOG_ROOT = "[useFlowNodeCanvas]";
 
 export const useFlowNodeCanvas = () => {
-  const { loaded } = useGetFlowNodes();
-  const { edgesList, nodesList, onChangeEdgesInternal, onChangeNode } =
-    useFlowNodes();
+  useGetFlowNodes();
+  const { edgesList, setEdgesList, nodesList, onEdgesChange, onNodesChange } =
+    useFlowStore(useShallow(flowStoreSelector));
 
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
-  const [nodes, setNodes, onNodesChange] = useNodesState<FlowNodeInternal>([]);
   const onConnect: OnConnect = useCallback(
     (connection) => {
-      setEdges((edges) => {
-        const newEdges = addEdge(connection, edges).map((edge) => {
-          return { ...edge, animated: true, type: "smoothstep" };
-        });
-        console.info(`${LOG_ROOT} onConnect()`, { connection, newEdges });
-        onChangeEdgesInternal(newEdges);
-        return newEdges;
+      const newEdges: FlowEdgeInternal[] = addEdge<FlowEdgeInternal>(
+        connection,
+        edgesList
+      ).map((edge) => {
+        return { ...edge, animated: true, type: "smoothstep" };
       });
+      console.info(`${LOG_ROOT} onConnect()`, {
+        connection,
+        edgesList,
+        newEdges,
+      });
+      setEdgesList(newEdges);
     },
-    [setEdges, onChangeEdgesInternal]
+    [edgesList, setEdgesList]
   );
 
-  useEffect(() => {
-    if (loaded) {
-      setEdges(edgesList);
-    }
-  }, [loaded, edgesList, setEdges]);
-  useEffect(() => {
-    if (loaded) {
-      setNodes(nodesList);
-    }
-  }, [loaded, nodesList, setNodes]);
+  const onNodeDragStop: OnNodeDrag = useCallback(
+    (event: MouseEvent, node: Node) => {
+      console.info(`${LOG_ROOT} onNodeDragStop()`, { event, node });
+      // TODO_PERSIST
+    },
+    []
+  );
 
-  useEffect(() => {
-    if (loaded) {
-      console.info(`${LOG_ROOT} edges changed`, edges);
-    }
-  }, [loaded, edges]);
-  useEffect(() => {
-    if (loaded) {
-      console.info(`${LOG_ROOT} nodes changed`, nodes);
-      onChangeNode(nodes);
-    }
-  }, [loaded, nodes, onChangeNode]);
-
-  return { edges, nodes, onConnect, onEdgesChange, onNodesChange };
+  return {
+    edges: edgesList,
+    nodes: nodesList,
+    onEdgesChange,
+    onNodesChange,
+    onConnect,
+    onNodeDragStop,
+  };
 };

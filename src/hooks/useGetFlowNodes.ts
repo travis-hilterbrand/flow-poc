@@ -66,22 +66,25 @@ export const useGetFlowNodes = () => {
   const { setEdgesList, setNodesList } = useFlowStore();
 
   const edgesData = MockFlow.edges;
-  useEffect(() => {
-    const result = edgeListToInternal(edgesData);
-    setEdgesList(result);
-    console.info(`${LOG_ROOT} edges initialized`, result);
-  }, [edgesData, setEdgesList]);
 
   const { data: schema } = useGetSchema();
   const nodesData = MockFlow.nodes;
   useEffect(() => {
     if (schema && !loaded) {
-      const result: FlowNodeInternal[] = flowListToInternal(nodesData, schema);
-      setNodesList(result);
+      const edgeList: FlowEdgeInternal[] = edgeListToInternal(edgesData);
+      setEdgesList(edgeList);
+      console.info(`${LOG_ROOT} edges initialized`, edgeList);
+      const nodeList: FlowNodeInternal[] = flowListToInternal(
+        nodesData,
+        schema
+      );
+      setNodesList(nodeList);
+      console.info(`${LOG_ROOT} nodes initialized`, nodeList);
+
       setLoaded(true);
-      console.info(`${LOG_ROOT} nodes initialized`, result);
+      console.info(`${LOG_ROOT} loaded`);
     }
-  }, [loaded, nodesData, schema, setNodesList]);
+  }, [loaded, edgesData, nodesData, schema, setEdgesList, setNodesList]);
 
   return { loaded };
 };
