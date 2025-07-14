@@ -18,8 +18,8 @@ export const FlowNodePropertyInputString = (
       placeholder={property.placeholder}
       required={property.required}
       style={{ width: "100%" }}
-      onChange={(newValue) => {
-        onChange(property, newValue);
+      onBlur={(event) => {
+        onChange(property, event.currentTarget.value);
       }}
     />
   );
